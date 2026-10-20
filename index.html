@@ -50,26 +50,28 @@ svg{display:block;width:100%;height:auto}
 .border{fill:none;stroke:var(--blue);stroke-width:1.2;stroke-dasharray:4 3;opacity:.6}
 .lead{stroke:var(--muted);stroke-width:.8}
 .dot{fill:var(--ink)}
-.pill{fill:var(--pill);stroke:var(--blue);stroke-width:1.3}
-.code{font-family:var(--display);font-weight:700;font-size:11.5px;text-anchor:middle;fill:var(--blue);letter-spacing:.04em}
+/* Logo badges: grey and faded until visited; red ring = all selected, dashed red = some */
+.badge{fill:#fff;stroke:var(--line);stroke-width:1.2}
+.logo{filter:grayscale(1);opacity:.45}
 .who circle{stroke:var(--land);stroke-width:.8}
-.mk.all .pill{fill:var(--goal);stroke:var(--goal)}
-.mk.all .code{fill:#fff}
+.mk.all .badge{stroke:var(--goal);stroke-width:2.6}
 .mk.all .dot{fill:var(--goal)}
-.mk.some .pill{fill:var(--goal-soft);stroke:var(--goal);stroke-dasharray:3 2}
-.mk.some .code{fill:var(--goal)}
+.mk.some .badge{stroke:var(--goal);stroke-width:2;stroke-dasharray:3.2 2.2}
+.mk.all .logo,.mk.some .logo{filter:none;opacity:1}
 .mk{cursor:default;outline:none}
-.mk:hover .pill,.mk:focus .pill{stroke-width:2.4}
+.mk:hover .badge,.mk:focus .badge{stroke-width:3.2}
 .legend{display:flex;flex-wrap:wrap;gap:8px 16px;color:var(--muted);font-size:13px;align-items:center}
-.legend i{display:inline-block;width:22px;height:12px;border-radius:6px;vertical-align:-1px;margin-right:6px;border:1.5px solid var(--blue);background:var(--pill)}
-.legend i.all{background:var(--goal);border-color:var(--goal)}
-.legend i.some{background:var(--goal-soft);border:1.5px dashed var(--goal)}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:-3px;margin-right:6px;border:1.5px solid var(--line);background:#fff}
+.legend i.all{border:2.5px solid var(--goal)}
+.legend i.some{border:2px dashed var(--goal)}
 .legend .pd{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:5px}
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;align-items:start}
 h2{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:16px;margin:0 0 8px;color:var(--muted)}
 ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
-li{display:flex;gap:10px;align-items:baseline;padding:6px 0;border-bottom:1px solid color-mix(in srgb,var(--line) 40%,transparent);min-width:0}
-.c{font-family:var(--display);font-weight:700;color:var(--blue);width:34px;flex:none}
+li{display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid color-mix(in srgb,var(--line) 40%,transparent);min-width:0}
+.c{font-family:var(--display);font-weight:700;color:var(--blue);flex:none;display:flex;align-items:center;gap:8px;width:72px}
+.c img{width:32px;height:32px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px var(--line);padding:2px;box-sizing:border-box}
+li.none .c img{filter:grayscale(1);opacity:.5}
 li.all .c,li.some .c{color:var(--goal)}
 .t{min-width:0;flex:1}
 .ppl{display:flex;gap:3px;flex:none;align-self:center}
@@ -110,6 +112,7 @@ const ARENAS=[{"code":"ANA","team":"Anaheim Ducks","venue":"Honda Center","city"
 const NS="http://www.w3.org/2000/svg";
 const el=(tag,attrs={},parent,text)=>{const n=tag.startsWith("svg:")?document.createElementNS(NS,tag.slice(4)):document.createElement(tag);for(const k in attrs)n.setAttribute(k,attrs[k]);if(text!=null)n.textContent=text;if(parent)parent.appendChild(n);return n};
 const has=(p,code)=>p.visits.includes(code);
+const logo=a=>`https://assets.nhle.com/logos/nhl/svg/${a.code}_light.svg`;
 const color=p=>`var(--p-${p.id})`;
 
 let selected=new Set(PEOPLE.map(p=>p.id));
@@ -153,11 +156,12 @@ function renderMap(){
     el("svg:title",{},m,`${a.team} · ${a.venue}, ${a.city}`+(who.length?` — visited by ${joinNames(who)}`:""));
     if(a.lx!=null)el("svg:line",{x1:a.cx,y1:a.cy,x2:a.lx,y2:a.ly,class:"lead"},m);
     el("svg:circle",{cx:a.cx,cy:a.cy,r:2.6,class:"dot"},m);
-    el("svg:rect",{x:a.px,y:a.py,width:34,height:18,rx:9,class:"pill"},m);
-    el("svg:text",{x:a.px+17,y:a.py+13,class:"code"},m,a.code);
+    const bx=a.px+17,by=a.py+9;
+    el("svg:circle",{cx:bx,cy:by,r:13,class:"badge"},m);
+    el("svg:image",{href:logo(a),x:bx-10,y:by-10,width:20,height:20,class:"logo"},m);
     if(who.length&&selected.size>1){
       const w=el("svg:g",{class:"who"},m),step=6.5,x0=a.px+17-(who.length-1)*step/2;
-      who.forEach((p,i)=>el("svg:circle",{cx:x0+i*step,cy:a.py+18,r:2.9,style:`fill:${color(p)}`},w));
+      who.forEach((p,i)=>el("svg:circle",{cx:x0+i*step,cy:a.py+24,r:2.9,style:`fill:${color(p)}`},w));
     }
   }
 }
@@ -165,7 +169,7 @@ function renderMap(){
 function li(a,ul){
   const {who,state}=status(a);
   const row=el("li",{class:state},ul);
-  el("span",{class:"c"},row,a.code);
+  const c=el("span",{class:"c"},row);el("img",{src:logo(a),alt:"",loading:"lazy"},c);c.append(a.code);
   const t=el("span",{class:"t"},row,a.team);el("small",{},t,`${a.venue} · ${a.city}`);
   if(who.length&&selected.size>1){const d=el("span",{class:"ppl"},row);who.forEach(p=>el("b",{style:`--c:${color(p)}`,title:p.name},d,p.name[0]))}
 }

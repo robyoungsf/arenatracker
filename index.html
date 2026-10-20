@@ -178,8 +178,8 @@ function renderLists(){
   const many=selected.size>1,ps=sel();
   const groups=[
     {state:"all",title:many?(selected.size===PEOPLE.length?"Everyone's been":"All of "+joinNames(ps)):"Visited"},
-    ...(many?[{state:"some",title:"Some of them"}]:[]),
-    {state:"none",title:"Still to go"},
+    ...(many?[{state:"some",title:"Some have been"}]:[]),
+    {state:"none",title:many?"None have been":"Still to go"},
   ];
   for(const gr of groups){
     const items=ARENAS.filter(a=>status(a).state===gr.state);

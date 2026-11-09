@@ -10,35 +10,46 @@ body{margin:0}
 /* Layout: scoreboard header, person filter, full-width ice-sheet map, arena lists below */
 :root{
   --ice:#eef3f7; --land:#ffffff; --water:#dbe6ee; --line:#9fb3c3; --ink:#14212c; --muted:#5d7080;
-  --goal:#c8102e; --goal-soft:#fbe3e6; --blue:#1f4e8c; --pill:#ffffff;
+  --goal:#c8102e; --all:#1e9e57; --some:#e3a008; --goal-soft:#fbe3e6; --blue:#1f4e8c; --pill:#ffffff;
   --p-rob:#0f8a7e; --p-dad:#c27c00; --p-kris:#7b4fc9; --p-michael:#c2266f;
   --display:"Inter",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --ice:#0d1620; --land:#1a2633; --water:#0d1620; --line:#3c5164; --ink:#e7eef4; --muted:#93a6b6;
-  --goal:#ff4d5e; --goal-soft:#3a1c24; --blue:#7fb0ef; --pill:#1a2633;
+  --goal:#ff4d5e; --all:#3fd283; --some:#f7bc3d; --goal-soft:#3a1c24; --blue:#7fb0ef; --pill:#1a2633;
   --p-rob:#3fc7b8; --p-dad:#f2b13c; --p-kris:#b294f2; --p-michael:#f27bb3; color-scheme:dark}}
 :root[data-theme="dark"]{
   --ice:#0d1620; --land:#1a2633; --water:#0d1620; --line:#3c5164; --ink:#e7eef4; --muted:#93a6b6;
-  --goal:#ff4d5e; --goal-soft:#3a1c24; --blue:#7fb0ef; --pill:#1a2633;
+  --goal:#ff4d5e; --all:#3fd283; --some:#f7bc3d; --goal-soft:#3a1c24; --blue:#7fb0ef; --pill:#1a2633;
   --p-rob:#3fc7b8; --p-dad:#f2b13c; --p-kris:#b294f2; --p-michael:#f27bb3; color-scheme:dark}
 body{background:var(--ice);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
 .wrap{max-width:1100px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px;display:grid;gap:20px}
 header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px}
 h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,44px);letter-spacing:0;margin:0;line-height:1;text-wrap:balance}
 h1 span{color:var(--goal)}
-.score{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:0;color:var(--muted);display:grid;gap:6px;justify-items:end;text-align:right}
-.score b{font-size:34px;line-height:1.1;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:0}
-.ticks{display:grid;grid-template-columns:repeat(32,1fr);gap:3px;width:min(320px,100%)}
+.meter{position:absolute;right:16px;bottom:16px;background:color-mix(in srgb,var(--land) 92%,transparent);border:1px solid color-mix(in srgb,var(--line) 50%,transparent);border-radius:10px;padding:10px 12px;box-shadow:0 4px 14px rgb(0 0 0 / .08)}
+.ticks{display:grid;grid-template-columns:repeat(32,1fr);gap:3px;width:min(240px,40vw)}
 .tick{height:10px;border-radius:2px;background:var(--line);opacity:.45}
-.tick.some{background:var(--goal);opacity:.35}
-.tick.on{background:var(--goal);opacity:1}
+.tick.some{background:var(--some);opacity:1}
+.tick.on{background:var(--all);opacity:1}
 .filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .filters .lbl{font-family:var(--display);font-weight:600;letter-spacing:0;color:var(--muted);font-size:14px;margin-right:4px}
 .chip{font:600 16px/1 var(--display);letter-spacing:0;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--pill);color:var(--ink);cursor:pointer;min-height:36px}
 .chip:hover{border-color:var(--blue)}
 .chip:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--ice)}
+.dd{position:relative}
+.dd-btn svg{opacity:.7}
+.sws{display:flex}
+.sws i{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 0 2px var(--pill);margin-right:-3px}
+.sws i:last-child{margin-right:0}
+.dd-menu{position:absolute;z-index:5;top:calc(100% + 6px);left:0;min-width:220px;background:var(--pill);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgb(0 0 0 / .14);padding:6px}
+.dd-menu hr{border:0;border-top:1px solid color-mix(in srgb,var(--line) 50%,transparent);margin:4px 2px}
+.dd-opt{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:500}
+.dd-opt:hover{background:color-mix(in srgb,var(--line) 20%,transparent)}
+.dd-opt input{margin:0;width:16px;height:16px;accent-color:var(--ink)}
+.dd-opt .sw{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.dd-opt .nm{flex:1}
+.dd-opt .n{color:var(--muted);font-variant-numeric:tabular-nums}
 .chip .sw{width:10px;height:10px;border-radius:50%;background:var(--c)}
 .chip .n{font-variant-numeric:tabular-nums;opacity:.7}
 .map{background:var(--water);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
@@ -55,24 +66,23 @@ svg{display:block;width:100%;height:auto}
 .lake{fill:var(--water);stroke:var(--line);stroke-width:.6}
 .mex{fill:var(--land);opacity:.45}
 .states{fill:none;stroke:var(--line);stroke-width:.4;opacity:.7}
-.border{fill:none;stroke:var(--blue);stroke-width:1.2;stroke-dasharray:4 3;opacity:.6}
+.border{fill:none;stroke:var(--line);stroke-width:1;stroke-dasharray:4 3;opacity:.6}
 .lead{stroke:var(--muted);stroke-width:.8}
 .dot{fill:var(--ink)}
 /* Logo badges: grey and faded until visited; red ring = all selected, dashed red = some */
 .badge{fill:#fff;stroke:var(--line);stroke-width:1.2}
 .logo{filter:grayscale(1);opacity:.45}
 .who circle{stroke:var(--land);stroke-width:.8}
-.mk.all .badge{stroke:var(--goal);stroke-width:2.6}
-.mk.all .dot{fill:var(--goal)}
-.mk.some .badge{stroke:var(--goal);stroke-width:2;stroke-dasharray:3.2 2.2}
+.mk.all .badge{stroke:var(--all);stroke-width:2.6}
+.mk.some .badge{stroke:var(--some);stroke-width:2.6}
 .mk.all .logo,.mk.some .logo{filter:none;opacity:1}
 .mk{cursor:default;outline:none}
 .mk:hover .badge,.mk:focus .badge{stroke-width:3.2}
 .legend{position:absolute;left:16px;bottom:16px;max-width:calc(100% - 32px);box-sizing:border-box;display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);font-size:13px;align-items:center;background:color-mix(in srgb,var(--land) 92%,transparent);border:1px solid color-mix(in srgb,var(--line) 50%,transparent);border-radius:10px;padding:8px 12px;box-shadow:0 4px 14px rgb(0 0 0 / .08)}
-@media (max-width:640px){.legend{position:static;max-width:none;border:0;border-top:1px solid var(--line);border-radius:0;box-shadow:none;background:var(--land);padding:10px 16px;font-size:12px}}
+@media (max-width:640px){.meter{position:static;border:0;border-radius:0;box-shadow:none;background:var(--land);padding:0 16px 12px}.meter .ticks{width:100%}.legend{position:static;max-width:none;border:0;border-top:1px solid var(--line);border-radius:0;box-shadow:none;background:var(--land);padding:10px 16px;font-size:12px}}
 .legend i{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:-3px;margin-right:6px;border:1.5px solid var(--line);background:#fff}
-.legend i.all{border:2.5px solid var(--goal)}
-.legend i.some{border:2px dashed var(--goal)}
+.legend i.all{border:2.5px solid var(--all)}
+.legend i.some{border:2.5px solid var(--some)}
 .legend .pd{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:5px}
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;align-items:start}
 h2{font-family:var(--display);font-weight:700;letter-spacing:0;font-size:16px;margin:0 0 8px;color:var(--muted)}
@@ -81,7 +91,8 @@ li{display:flex;gap:10px;align-items:center;padding:12px 0;border-bottom:1px sol
 .c{font-family:var(--display);font-weight:700;color:var(--blue);flex:none;display:flex;align-items:center;align-self:flex-start;margin-top:2px}
 .c img{width:32px;height:32px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px var(--line);padding:2px;box-sizing:border-box}
 li.none .c img{filter:grayscale(1);opacity:.5}
-li.all .c,li.some .c{color:var(--goal)}
+li.all .c img{box-shadow:0 0 0 2px var(--all)}
+li.some .c img{box-shadow:0 0 0 2px var(--some)}
 .t{min-width:0;flex:1}
 /* One circle per person under each arena: dashed until they've been, then filled */
 .ppl{display:flex;gap:6px;margin-top:5px}
@@ -106,12 +117,17 @@ small{display:block;color:var(--muted);font-size:12.5px}
 <g id="markers"></g>
 </svg>
 <div class="legend" id="legend"></div>
+<div class="meter"><div class="ticks" id="ticks" role="img"></div></div>
 <a class="peek" id="peek" hidden><img alt=""><span><b></b><small></small></span></a>
 </div>
 <div class="wrap">
 <header>
-  <div class="filters" role="group" aria-label="Filter by person"><span class="lbl">Show</span><span id="chips"></span></div>
-  <div class="score"><span><b id="count">0</b> / 32 arenas</span><span id="scope"></span><div class="ticks" id="ticks"></div></div>
+  <div class="filters"><span class="lbl" id="showLbl">Show</span>
+    <div class="dd" id="dd">
+      <button type="button" class="chip dd-btn" id="ddBtn" aria-haspopup="true" aria-expanded="false" aria-labelledby="showLbl ddBtn"><span class="sws" id="ddSw"></span><span id="ddTxt">Everyone</span><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="dd-menu" id="ddMenu" role="group" aria-label="People to show" hidden></div>
+    </div>
+  </div>
 </header>
 <div class="cols" id="lists"></div>
 </div>
@@ -151,21 +167,40 @@ function status(a){
 function joinNames(ps){const n=ps.map(p=>p.name);return n.length<2?n[0]:n.slice(0,-1).join(", ")+" & "+n.at(-1)}
 
 function renderChips(){
-  const box=document.getElementById("chips");box.textContent="";box.style.display="contents";
-  const everyone=el("button",{class:"chip",type:"button","aria-pressed":selected.size===PEOPLE.length},box,"Everyone");
-  everyone.onclick=()=>{selected=new Set(PEOPLE.map(p=>p.id));update()};
-  for(const p of PEOPLE){
-    const b=el("button",{class:"chip",type:"button","aria-pressed":selected.has(p.id)&&selected.size<PEOPLE.length,style:`--c:${color(p)}`},box);
-    el("span",{class:"sw"},b);el("span",{},b,p.name);el("span",{class:"n"},b,p.visits.length);
-    b.onclick=()=>{
-      if(selected.size===PEOPLE.length)selected=new Set([p.id]);
-      else if(selected.has(p.id))selected.delete(p.id);
-      else selected.add(p.id);
-      if(!selected.size)selected=new Set(PEOPLE.map(q=>q.id));
-      update();
+  const all=selected.size===PEOPLE.length,ps=sel();
+  document.getElementById("ddTxt").textContent=all?"Everyone":joinNames(ps);
+  const sw=document.getElementById("ddSw");sw.textContent="";
+  for(const p of ps)el("i",{style:`--c:${color(p)}`},sw);
+  const menu=document.getElementById("ddMenu");
+  if(!menu.childElementCount){
+    const opt=(id,label,c,n)=>{
+      const l=el("label",{class:"dd-opt"},menu);
+      const cb=el("input",{type:"checkbox","data-id":id},l);
+      if(c)el("span",{class:"sw",style:`--c:${c}`},l);
+      el("span",{class:"nm"},l,label);
+      if(n!=null)el("span",{class:"n"},l,n);
+      cb.onchange=()=>{
+        if(id==="all")selected=new Set(PEOPLE.map(q=>q.id));
+        else{
+          if(cb.checked)selected.add(id);else selected.delete(id);
+          if(!selected.size)selected=new Set(PEOPLE.map(q=>q.id));
+        }
+        update();
+      };
     };
+    opt("all","Everyone");
+    el("hr",{},menu);
+    for(const p of PEOPLE)opt(p.id,p.name,color(p),p.visits.length);
   }
+  for(const cb of menu.querySelectorAll("input"))cb.checked=cb.dataset.id==="all"?all:selected.has(cb.dataset.id);
 }
+function setMenu(open){
+  document.getElementById("ddMenu").hidden=!open;
+  document.getElementById("ddBtn").setAttribute("aria-expanded",open);
+}
+document.getElementById("ddBtn").onclick=()=>setMenu(document.getElementById("ddMenu").hidden);
+document.addEventListener("click",e=>{if(!document.getElementById("dd").contains(e.target))setMenu(false)});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.getElementById("ddMenu").hidden){setMenu(false);document.getElementById("ddBtn").focus()}});
 
 // Put each logo on its city; where cities crowd together, push logos apart just enough not to overlap.
 const POS=(()=>{
@@ -248,10 +283,9 @@ function renderLists(){
 
 function renderScore(){
   const st=ARENAS.map(a=>status(a).state).sort((x,y)=>"all some none".indexOf(x)-"all some none".indexOf(y));
-  document.getElementById("count").textContent=st.filter(s=>s==="all").length;
-  const ps=sel();
-  document.getElementById("scope").textContent=ps.length===PEOPLE.length?"visited by everyone":ps.length===1?"visited by "+ps[0].name:"visited by all of "+joinNames(ps);
+  const ps=sel(),n=st.filter(s=>s==="all").length,who=ps.length===PEOPLE.length?"everyone":ps.length===1?ps[0].name:"all of "+joinNames(ps);
   const t=document.getElementById("ticks");t.textContent="";
+  t.setAttribute("aria-label",`${n} of 32 arenas visited by ${who}`);t.title=`${n} of 32 arenas visited by ${who}`;
   st.forEach(s=>el("span",{class:"tick"+(s==="all"?" on":s==="some"?" some":"")},t));
 }
 function renderLegend(){

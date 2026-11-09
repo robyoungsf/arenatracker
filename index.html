@@ -7,21 +7,14 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
 body{margin:0}
-/* Layout: scoreboard header, person filter, full-width ice-sheet map, arena lists below */
+/* Dark theme only */
 :root{
-  --ice:#eef3f7; --land:#ffffff; --water:#dbe6ee; --line:#9fb3c3; --ink:#14212c; --muted:#5d7080;
-  --goal:#c8102e; --all:#1e9e57; --some:#e3a008; --goal-soft:#fbe3e6; --blue:#1f4e8c; --pill:#ffffff;
-  --p-rob:#0f8a7e; --p-dad:#c27c00; --p-kris:#7b4fc9; --p-michael:#c2266f;
+  --ice:#0d1620; --land:#1a2633; --water:#0d1620; --line:#3c5164; --ink:#e7eef4; --muted:#93a6b6;
+  --goal:#ff4d5e; --all:#3fd283; --some:#f7bc3d; --goal-soft:#3a1c24; --blue:#7fb0ef; --pill:#1a2633;
+  --p-rob:#3fc7b8; --p-dad:#f2b13c; --p-kris:#b294f2; --p-michael:#f27bb3;
   --display:"Inter",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif;
+  color-scheme:dark;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --ice:#0d1620; --land:#1a2633; --water:#0d1620; --line:#3c5164; --ink:#e7eef4; --muted:#93a6b6;
-  --goal:#ff4d5e; --all:#3fd283; --some:#f7bc3d; --goal-soft:#3a1c24; --blue:#7fb0ef; --pill:#1a2633;
-  --p-rob:#3fc7b8; --p-dad:#f2b13c; --p-kris:#b294f2; --p-michael:#f27bb3; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --ice:#0d1620; --land:#1a2633; --water:#0d1620; --line:#3c5164; --ink:#e7eef4; --muted:#93a6b6;
-  --goal:#ff4d5e; --all:#3fd283; --some:#f7bc3d; --goal-soft:#3a1c24; --blue:#7fb0ef; --pill:#1a2633;
-  --p-rob:#3fc7b8; --p-dad:#f2b13c; --p-kris:#b294f2; --p-michael:#f27bb3; color-scheme:dark}
 body{background:var(--ice);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
 /* Google Maps-style: scrolling list panel on the left, map fills the rest of the screen */
 html,body{height:100%}
@@ -61,6 +54,7 @@ h1 span{color:var(--goal)}
 /* Photo card shown when hovering an arena we have a game page for */
 .peek{position:absolute;z-index:2;width:240px;background:var(--land);border-radius:10px;box-shadow:0 10px 30px rgb(0 0 0 / .28);overflow:hidden;color:var(--ink);text-decoration:none;transform:translate(-50%,0);pointer-events:none}
 .peek img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.peek img[hidden]{display:none}
 .peek span{display:block;padding:8px 10px 10px}
 .peek b{font:700 17px/1.35 var(--display);letter-spacing:0;display:block}
 .peek small{margin-top:2px}
@@ -103,7 +97,7 @@ li.some .c img{box-shadow:0 0 0 2px var(--some)}
 /* One circle per person under each arena: dashed until they've been, then filled */
 .ppl{display:flex;gap:6px;margin-top:5px}
 .ppl i{width:18px;height:18px;border-radius:50%;box-sizing:border-box;border:1.5px dashed var(--line);display:grid;place-items:center;font:600 10px/1 var(--body);font-style:normal;color:var(--muted)}
-.ppl i.on{background:var(--c);border:1.5px solid var(--c);color:#fff}
+.ppl i.on{background:var(--c);border:1.5px solid var(--c);color:var(--ice)}
 small.gm{font-weight:400;color:var(--muted)}
 small{display:block;color:var(--muted);font-size:12.5px}
 .empty{color:var(--muted);font-size:13px;padding:6px 0}
@@ -150,6 +144,9 @@ const PEOPLE=[
 // Games we've written up: a detail page and a photo shown when hovering the arena on the map.
 const GAMES={
   CGY:{page:"calgary.html",photo:"public/calgary/IMG_0248.jpg",title:"Red Wings 1 · Flames 4",date:"Oct 24, 2026"},
+  MIN:{page:"minnesota.html",title:"Red Wings 4 · Wild 7",date:"Feb 14, 2022"},
+  DET:{page:"detroit.html",title:"Canadiens 0 · Red Wings 3",date:"Oct 14, 2022 · Season opener"},
+  WSH:{page:"washington.html",title:"Red Wings 1 · Capitals 4",date:"Mar 18, 2025"},
 };
 const ARENAS=[{"code":"ANA","team":"Anaheim Ducks","venue":"Honda Center","city":"Anaheim, CA","cx":147.4,"cy":403.5,"px":154.4,"py":412.5,"lx":171.4,"ly":421.5},{"code":"BOS","team":"Boston Bruins","venue":"TD Garden","city":"Boston, MA","cx":819.9,"cy":238.4,"px":832.9,"py":221.4,"lx":849.9,"ly":230.4},{"code":"BUF","team":"Buffalo Sabres","venue":"KeyBank Center","city":"Buffalo, NY","cx":714.3,"cy":254.8,"px":697.3,"py":271.8,"lx":714.3,"ly":280.8},{"code":"CGY","team":"Calgary Flames","venue":"Scotiabank Saddledome","city":"Calgary, AB","cx":271.2,"cy":103.4,"px":254.2,"py":94.4},{"code":"CAR","team":"Carolina Hurricanes","venue":"Lenovo Center","city":"Raleigh, NC","cx":742.2,"cy":382.9,"px":747.2,"py":379.9,"lx":764.2,"ly":388.9},{"code":"CHI","team":"Chicago Blackhawks","venue":"United Center","city":"Chicago, IL","cx":597.9,"cy":290.5,"px":580.9,"py":281.5},{"code":"COL","team":"Colorado Avalanche","venue":"Ball Arena","city":"Denver, CO","cx":355.2,"cy":328.9,"px":338.2,"py":319.9},{"code":"CBJ","team":"Columbus Blue Jackets","venue":"Nationwide Arena","city":"Columbus, OH","cx":667,"cy":317.7,"px":644,"py":334.7,"lx":661,"ly":343.7},{"code":"DAL","team":"Dallas Stars","venue":"American Airlines Center","city":"Dallas, TX","cx":470.5,"cy":464.8,"px":453.5,"py":455.8},{"code":"DET","team":"Detroit Red Wings","venue":"Little Caesars Arena","city":"Detroit, MI","cx":659.8,"cy":274.3,"px":616.8,"py":259.3,"lx":633.8,"ly":268.3},{"code":"EDM","team":"Edmonton Oilers","venue":"Rogers Place","city":"Edmonton, AB","cx":287.1,"cy":58.2,"px":270.1,"py":49.2},{"code":"FLA","team":"Florida Panthers","venue":"Amerant Bank Arena","city":"Sunrise, FL","cx":750.9,"cy":566.1,"px":755.9,"py":557.1,"lx":772.9,"ly":566.1},{"code":"LAK","team":"Los Angeles Kings","venue":"Crypto.com Arena","city":"Los Angeles, CA","cx":142.7,"cy":397.7,"px":99.7,"py":396.7,"lx":116.7,"ly":405.7},{"code":"MIN","team":"Minnesota Wild","venue":"Xcel Energy Center","city":"St. Paul, MN","cx":521.3,"cy":238.6,"px":504.3,"py":229.6},{"code":"MTL","team":"Montréal Canadiens","venue":"Bell Centre","city":"Montréal, QC","cx":772.1,"cy":191.5,"px":777.1,"py":156.5,"lx":794.1,"ly":165.5},{"code":"NSH","team":"Nashville Predators","venue":"Bridgestone Arena","city":"Nashville, TN","cx":621.4,"cy":394.8,"px":604.4,"py":385.8},{"code":"NJD","team":"New Jersey Devils","venue":"Prudential Center","city":"Newark, NJ","cx":786.4,"cy":279,"px":729.4,"py":264,"lx":746.4,"ly":273},{"code":"NYI","team":"New York Islanders","venue":"UBS Arena","city":"Elmont, NY","cx":792.5,"cy":277.9,"px":805.5,"py":278.9,"lx":822.5,"ly":287.9},{"code":"NYR","team":"New York Rangers","venue":"Madison Square Garden","city":"New York, NY","cx":788.7,"cy":278.1,"px":765.7,"py":235.1,"lx":782.7,"ly":244.1},{"code":"OTT","team":"Ottawa Senators","venue":"Canadian Tire Centre","city":"Ottawa, ON","cx":743.1,"cy":202.6,"px":696.1,"py":165.6,"lx":713.1,"ly":174.6},{"code":"PHI","team":"Philadelphia Flyers","venue":"Xfinity Mobile Arena","city":"Philadelphia, PA","cx":776.4,"cy":297.4,"px":721.4,"py":292.4,"lx":738.4,"ly":301.4},{"code":"PIT","team":"Pittsburgh Penguins","venue":"PPG Paints Arena","city":"Pittsburgh, PA","cx":707.7,"cy":302,"px":660.7,"py":299,"lx":677.7,"ly":308},{"code":"SJS","team":"San Jose Sharks","venue":"SAP Center","city":"San Jose, CA","cx":106.6,"cy":323.8,"px":63.6,"py":314.8,"lx":80.6,"ly":323.8},{"code":"SEA","team":"Seattle Kraken","venue":"Climate Pledge Arena","city":"Seattle, WA","cx":157.1,"cy":139.7,"px":140.1,"py":130.7},{"code":"STL","team":"St. Louis Blues","venue":"Enterprise Center","city":"St. Louis, MO","cx":567.1,"cy":353.5,"px":550.1,"py":344.5},{"code":"TBL","team":"Tampa Bay Lightning","venue":"Benchmark International Arena","city":"Tampa, FL","cx":709.7,"cy":538.6,"px":666.7,"py":529.6,"lx":683.7,"ly":538.6},{"code":"TOR","team":"Toronto Maple Leafs","venue":"Scotiabank Arena","city":"Toronto, ON","cx":704.9,"cy":242.1,"px":661.9,"py":227.1,"lx":678.9,"ly":236.1},{"code":"UTA","team":"Utah Mammoth","venue":"Delta Center","city":"Salt Lake City, UT","cx":261.4,"cy":296.3,"px":244.4,"py":287.3},{"code":"VAN","team":"Vancouver Canucks","venue":"Rogers Arena","city":"Vancouver, BC","cx":157.6,"cy":107.4,"px":140.6,"py":98.4},{"code":"VGK","team":"Vegas Golden Knights","venue":"T-Mobile Arena","city":"Las Vegas, NV","cx":197.5,"cy":371.5,"px":202.5,"py":362.5,"lx":219.5,"ly":371.5},{"code":"WSH","team":"Washington Capitals","venue":"Capital One Arena","city":"Washington, DC","cx":754.8,"cy":321.5,"px":731.8,"py":340.5,"lx":748.8,"ly":349.5},{"code":"WPG","team":"Winnipeg Jets","venue":"Canada Life Centre","city":"Winnipeg, MB","cx":469.4,"cy":146.9,"px":452.4,"py":137.9}];
 const NS="http://www.w3.org/2000/svg";
@@ -265,7 +262,7 @@ function renderMap(){
 
 function showPeek(m,game){
   const peek=document.getElementById("peek"),map=document.getElementById("map");
-  peek.querySelector("img").src=game.photo;peek.querySelector("b").textContent=game.title;
+  const im=peek.querySelector("img");im.hidden=!game.photo;if(game.photo)im.src=game.photo;peek.querySelector("b").textContent=game.title;
   peek.querySelector("small").textContent=game.date+" · click for the game";
   peek.hidden=false;
   const r=m.querySelector(".badge").getBoundingClientRect(),mr=map.getBoundingClientRect();

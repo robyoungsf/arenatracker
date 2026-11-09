@@ -4,38 +4,38 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NHL Arena Quest</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
 body{margin:0}
 /* Layout: scoreboard header, person filter, full-width ice-sheet map, arena lists below */
 :root{
   --ice:#eef3f7; --land:#ffffff; --water:#dbe6ee; --line:#9fb3c3; --ink:#14212c; --muted:#5d7080;
   --goal:#c8102e; --goal-soft:#fbe3e6; --blue:#1f4e8c; --pill:#ffffff;
-  --p-rob:#0f8a7e; --p-dad:#c27c00; --p-kris:#7b4fc9; --p-michael:#8a5a2b;
-  --display:"Barlow Condensed","Arial Narrow",sans-serif; --body:"Barlow",system-ui,sans-serif;
+  --p-rob:#0f8a7e; --p-dad:#c27c00; --p-kris:#7b4fc9; --p-michael:#c2266f;
+  --display:"Inter",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --ice:#0d1620; --land:#1a2633; --water:#0d1620; --line:#3c5164; --ink:#e7eef4; --muted:#93a6b6;
   --goal:#ff4d5e; --goal-soft:#3a1c24; --blue:#7fb0ef; --pill:#1a2633;
-  --p-rob:#3fc7b8; --p-dad:#f2b13c; --p-kris:#b294f2; --p-michael:#d29a62; color-scheme:dark}}
+  --p-rob:#3fc7b8; --p-dad:#f2b13c; --p-kris:#b294f2; --p-michael:#f27bb3; color-scheme:dark}}
 :root[data-theme="dark"]{
   --ice:#0d1620; --land:#1a2633; --water:#0d1620; --line:#3c5164; --ink:#e7eef4; --muted:#93a6b6;
   --goal:#ff4d5e; --goal-soft:#3a1c24; --blue:#7fb0ef; --pill:#1a2633;
-  --p-rob:#3fc7b8; --p-dad:#f2b13c; --p-kris:#b294f2; --p-michael:#d29a62; color-scheme:dark}
-body{background:var(--ice);color:var(--ink);font-family:var(--body);font-size:15px}
+  --p-rob:#3fc7b8; --p-dad:#f2b13c; --p-kris:#b294f2; --p-michael:#f27bb3; color-scheme:dark}
+body{background:var(--ice);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
 .wrap{max-width:1100px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px;display:grid;gap:20px}
 header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px}
-h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,44px);letter-spacing:.02em;text-transform:uppercase;margin:0;line-height:1;text-wrap:balance}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,44px);letter-spacing:0;margin:0;line-height:1;text-wrap:balance}
 h1 span{color:var(--goal)}
-.score{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:grid;gap:6px;justify-items:end;text-align:right}
-.score b{font-size:34px;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:0}
+.score{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:0;color:var(--muted);display:grid;gap:6px;justify-items:end;text-align:right}
+.score b{font-size:34px;line-height:1.1;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:0}
 .ticks{display:grid;grid-template-columns:repeat(32,1fr);gap:3px;width:min(320px,100%)}
 .tick{height:10px;border-radius:2px;background:var(--line);opacity:.45}
 .tick.some{background:var(--goal);opacity:.35}
 .tick.on{background:var(--goal);opacity:1}
 .filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.filters .lbl{font-family:var(--display);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-size:14px;margin-right:4px}
-.chip{font:600 16px/1 var(--display);letter-spacing:.04em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--pill);color:var(--ink);cursor:pointer;min-height:36px}
+.filters .lbl{font-family:var(--display);font-weight:600;letter-spacing:0;color:var(--muted);font-size:14px;margin-right:4px}
+.chip{font:600 16px/1 var(--display);letter-spacing:0;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--pill);color:var(--ink);cursor:pointer;min-height:36px}
 .chip:hover{border-color:var(--blue)}
 .chip:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--ice)}
@@ -47,7 +47,7 @@ h1 span{color:var(--goal)}
 .peek{position:absolute;z-index:2;width:240px;background:var(--land);border-radius:10px;box-shadow:0 10px 30px rgb(0 0 0 / .28);overflow:hidden;color:var(--ink);text-decoration:none;transform:translate(-50%,0);pointer-events:none}
 .peek img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
 .peek span{display:block;padding:8px 10px 10px}
-.peek b{font:700 17px/1.1 var(--display);text-transform:uppercase;letter-spacing:.03em;display:block}
+.peek b{font:700 17px/1.35 var(--display);letter-spacing:0;display:block}
 .peek small{margin-top:2px}
 .mk.game{cursor:pointer}
 svg{display:block;width:100%;height:auto}
@@ -68,25 +68,29 @@ svg{display:block;width:100%;height:auto}
 .mk.all .logo,.mk.some .logo{filter:none;opacity:1}
 .mk{cursor:default;outline:none}
 .mk:hover .badge,.mk:focus .badge{stroke-width:3.2}
-.legend{display:flex;flex-wrap:wrap;gap:8px 16px;color:var(--muted);font-size:13px;align-items:center}
+.legend{position:absolute;left:16px;bottom:16px;max-width:calc(100% - 32px);box-sizing:border-box;display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);font-size:13px;align-items:center;background:color-mix(in srgb,var(--land) 92%,transparent);border:1px solid color-mix(in srgb,var(--line) 50%,transparent);border-radius:10px;padding:8px 12px;box-shadow:0 4px 14px rgb(0 0 0 / .08)}
+@media (max-width:640px){.legend{position:static;max-width:none;border:0;border-top:1px solid var(--line);border-radius:0;box-shadow:none;background:var(--land);padding:10px 16px;font-size:12px}}
 .legend i{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:-3px;margin-right:6px;border:1.5px solid var(--line);background:#fff}
 .legend i.all{border:2.5px solid var(--goal)}
 .legend i.some{border:2px dashed var(--goal)}
 .legend .pd{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:5px}
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;align-items:start}
-h2{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:16px;margin:0 0 8px;color:var(--muted)}
+h2{font-family:var(--display);font-weight:700;letter-spacing:0;font-size:16px;margin:0 0 8px;color:var(--muted)}
 ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
-li{display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid color-mix(in srgb,var(--line) 40%,transparent);min-width:0}
-.c{font-family:var(--display);font-weight:700;color:var(--blue);flex:none;display:flex;align-items:center;gap:8px;width:72px}
+li{display:flex;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid color-mix(in srgb,var(--line) 40%,transparent);min-width:0}
+.c{font-family:var(--display);font-weight:700;color:var(--blue);flex:none;display:flex;align-items:center;align-self:flex-start;margin-top:2px}
 .c img{width:32px;height:32px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px var(--line);padding:2px;box-sizing:border-box}
 li.none .c img{filter:grayscale(1);opacity:.5}
 li.all .c,li.some .c{color:var(--goal)}
 .t{min-width:0;flex:1}
-.ppl{display:flex;gap:3px;flex:none;align-self:center}
-.ppl b{font:700 11px/16px var(--display);width:16px;height:16px;border-radius:50%;text-align:center;color:#fff;background:var(--c)}
+/* One circle per person under each arena: dashed until they've been, then filled */
+.ppl{display:flex;gap:6px;margin-top:5px}
+.ppl i{width:18px;height:18px;border-radius:50%;box-sizing:border-box;border:1.5px dashed var(--line);display:grid;place-items:center;font:600 10px/1 var(--body);font-style:normal;color:var(--muted)}
+.ppl i.on{background:var(--c);border:1.5px solid var(--c);color:#fff}
+small.gm{font-weight:400;color:var(--muted)}
 small{display:block;color:var(--muted);font-size:12.5px}
 .empty{color:var(--muted);font-size:13px;padding:6px 0}
-.gl{color:inherit;text-decoration:underline;text-decoration-color:var(--goal);text-underline-offset:3px;text-decoration-thickness:2px}
+.gl{color:inherit;text-decoration:underline;text-decoration-color:currentColor;text-underline-offset:3px;text-decoration-thickness:2px}
 .gl:hover{color:var(--goal)}
 </style>
 </head>
@@ -101,6 +105,7 @@ small{display:block;color:var(--muted);font-size:12.5px}
 <path class="border" d="M117.7,-22.9L116.2,-21.9L113.5,-20.7L112.2,-19.9M157.6,-331.6L154.5,-326.1L151.3,-320.6L148.2,-315.1L145.1,-309.7L142.0,-304.2L138.9,-298.8L135.9,-293.5L132.8,-288.1L129.8,-282.7L126.8,-277.4L123.7,-272.1L120.7,-266.8L117.7,-261.5L114.7,-256.2L111.7,-251.0L108.8,-245.7L105.8,-240.5L102.8,-235.3L99.9,-230.1L96.9,-225.0L94.0,-219.8L91.1,-214.6L88.2,-209.5L85.2,-204.4L82.3,-199.3L79.5,-194.2L76.6,-189.1L73.7,-184.0L70.8,-179.0L67.9,-173.9L65.1,-168.9L62.2,-163.9L63.8,-162.0L65.5,-160.2L66.9,-161.2L68.5,-159.0L69.8,-156.9L71.7,-157.5L73.8,-158.0L75.6,-157.2L77.7,-156.2L79.1,-155.5L78.5,-154.4L77.0,-152.8L75.7,-151.5L76.1,-149.3L77.2,-147.6L78.2,-146.1L77.7,-143.6L78.4,-141.1L78.9,-139.3L79.4,-137.5L80.1,-134.9L80.7,-133.0L81.4,-130.6L81.8,-129.2L81.3,-127.1L80.7,-124.6L79.7,-123.5L80.3,-122.9L82.5,-123.6L84.3,-123.8L86.6,-124.1L88.1,-124.3L90.2,-123.3L92.3,-125.0L93.9,-128.1L94.9,-127.6L95.8,-127.7L96.5,-128.5L96.5,-130.1L98.8,-129.7L100.4,-129.4L103.1,-129.5L105.7,-129.7L106.2,-128.3L106.7,-127.0L107.6,-124.0L107.5,-123.5L106.9,-122.6L106.3,-121.7L106.1,-118.5L106.3,-118.0L107.1,-117.2L107.8,-115.7L107.9,-114.7L108.9,-112.7L109.0,-112.0L108.7,-111.1L108.7,-110.3L108.7,-109.6L108.7,-108.7L109.0,-107.5L109.9,-106.0L110.6,-104.8L111.5,-103.3L111.9,-100.8L112.4,-98.5L112.9,-96.3L112.1,-95.1L112.6,-92.4L112.9,-89.2L112.9,-86.4L113.2,-84.8L113.3,-82.5L113.4,-79.7L113.6,-76.6L113.9,-74.4L114.2,-71.5L114.3,-69.8L113.5,-69.1L112.3,-68.2L113.9,-66.9L114.9,-66.0L114.0,-64.8L112.9,-63.3L114.0,-62.0L114.7,-61.1L114.1,-60.3L114.2,-59.1L113.5,-57.3L115.3,-56.7L116.0,-56.5L116.7,-55.3L117.6,-53.7L118.6,-52.2L119.4,-51.0L120.6,-49.9L122.2,-48.4L122.5,-46.7L124.0,-45.3L123.8,-43.2L125.5,-41.6L126.9,-41.6L126.9,-40.7L126.9,-39.7L126.5,-38.5L126.0,-37.4M159.7,113.6L160.8,114.0L165.9,115.6L170.8,117.1L175.9,118.6L180.9,120.1L185.9,121.6L190.9,123.0L195.9,124.5L201.0,125.9L206.0,127.2L211.1,128.6L216.2,129.9L221.3,131.2L226.3,132.5L231.4,133.7L236.5,134.9L241.6,136.1L246.7,137.3L251.8,138.4L256.9,139.6L262.0,140.7L267.1,141.7L272.3,142.8L277.4,143.8L282.5,144.8L287.7,145.8L292.8,146.7L298.0,147.6L303.1,148.5L308.3,149.4L313.4,150.2L318.6,151.1L323.8,151.9L329.0,152.6L334.1,153.4L339.3,154.1L344.5,154.8L349.7,155.4L354.9,156.1L360.1,156.7L365.3,157.3L370.5,157.9L375.7,158.4L380.9,158.9L386.1,159.4L391.3,159.9L396.5,160.3L401.8,160.7L407.0,161.1L412.2,161.5L417.4,161.8L422.7,162.1L427.9,162.4L433.1,162.6L438.3,162.9L443.5,163.1L448.8,163.3L454.0,163.4L459.2,163.6L464.5,163.7L469.7,163.7L474.9,163.8L480.1,163.8L485.4,163.8L490.6,163.8L493.5,163.8L493.5,159.8L493.5,156.7L496.2,157.1L497.0,157.6L497.2,157.9L497.2,158.8L497.4,161.4L497.9,163.5L499.1,166.1L499.1,166.1L499.2,167.1L499.6,167.8L500.2,168.4L502.8,169.0L507.2,169.8L509.8,170.7L510.4,171.8L511.6,172.2L513.4,171.9L514.6,171.4L515.6,170.3L517.1,170.1L518.4,170.1L519.6,170.2L520.3,170.3L522.3,171.1L523.7,171.7L525.5,172.9L526.6,173.4L527.1,174.6L527.8,176.3L528.6,176.2L529.2,175.2L530.7,175.0L532.8,175.6L534.8,177.4L537.5,179.0L539.1,179.8L540.7,179.7L542.8,178.8L544.9,177.0L546.4,176.6L547.4,176.7L548.0,178.0L548.7,178.4L550.4,178.2L554.0,178.2L556.8,177.7L557.5,178.4L558.2,179.5L559.3,179.8L560.9,179.3L563.7,179.4L564.9,179.4L567.1,178.7L568.2,178.1L569.6,177.2L571.6,175.8L574.9,173.6L577.8,172.6L580.6,173.8L582.9,174.8L583.7,175.3L586.0,176.4L589.3,177.9L593.1,179.6L596.9,181.4L600.2,182.9L602.5,183.9L603.4,184.3L606.0,185.5L608.6,186.7L611.3,187.9L613.8,189.1L616.4,190.3L619.1,191.5L621.7,192.7L624.3,193.8L625.3,196.2L626.2,198.5L627.8,200.1L629.4,201.5L630.1,201.3L630.8,200.5L631.3,200.1L632.1,200.0L633.9,199.1L634.4,199.2L634.8,199.4L634.8,199.9L634.8,200.2L634.7,201.0L635.3,202.3L635.6,203.8L636.0,204.9L636.9,206.3L637.8,207.3L638.6,207.4L640.4,206.5L641.6,206.1L642.3,206.1L643.6,207.0L644.3,207.6L644.5,208.1L643.4,211.6L646.1,212.8L649.2,214.2L652.9,215.8L655.1,216.8L658.1,218.2L659.0,220.7L659.7,222.9L660.7,225.9L661.7,229.0L662.7,232.0L663.7,235.3L664.9,238.8L666.0,242.0L667.1,245.4L668.6,249.9L668.2,251.8L667.3,255.9L666.5,259.6L666.5,260.6L666.3,265.9L665.9,268.1L664.8,269.5L663.6,270.9L662.2,273.1L660.5,274.4L659.7,275.1L659.4,276.1L659.1,278.2L659.7,281.2L661.6,283.6L664.0,284.7L666.6,285.8L670.1,285.2L672.9,282.8L675.8,280.3L678.4,278.0L681.5,275.3L684.3,272.9L687.5,271.6L692.0,269.8L697.7,267.6L700.3,265.7L703.6,263.2L707.4,260.4L710.7,257.9L712.4,256.5L713.5,255.1L713.6,254.3L713.4,253.8L713.0,253.4L712.5,253.1L712.0,252.9L711.8,252.6L711.5,251.8L711.2,251.4L710.9,251.1L710.4,247.9L709.9,247.0L708.2,244.8L710.3,243.3L712.1,241.8L713.6,240.7L717.0,239.9L720.2,239.3L724.6,238.4L728.3,237.6L732.7,236.7L735.2,236.2L738.5,235.4L739.5,232.2L740.4,229.3L741.4,226.6L743.6,223.1L744.2,222.4L744.5,221.2L745.9,219.7L747.5,218.3L748.0,217.2L748.2,216.6L752.1,210.4L754.4,207.5L756.4,205.6L758.0,204.6L759.2,204.3L759.9,204.1L760.5,204.0L763.5,203.2L768.7,201.8L774.0,200.5L779.3,199.1L784.6,197.6L789.9,196.1L795.1,194.7L800.3,193.1L800.6,189.3L801.3,187.4L803.0,187.5L803.8,187.2L804.5,186.1L805.1,185.3L805.7,185.3L806.3,185.9L806.8,186.3L807.2,186.1L807.3,185.2L807.0,184.3L807.3,183.4L807.8,183.1L808.4,183.0L808.5,182.6L808.3,182.1L807.9,181.4L807.7,180.5L808.5,178.4L809.8,176.8L810.2,176.1L810.0,174.9L810.6,173.4L810.8,172.6L810.8,172.0L810.3,171.3L809.9,170.0L809.7,168.2L809.6,166.3L809.9,164.4L810.8,162.3L810.4,159.8L810.0,157.3L810.9,154.4L812.0,151.1L812.6,149.2L813.6,145.8L814.3,143.4L814.7,142.3L815.1,141.0L816.3,140.9L817.6,140.9L817.9,142.5L818.5,143.6L819.2,144.1L820.2,144.3L820.8,144.2L821.6,144.0L823.2,142.5L825.2,141.2L826.3,140.2L826.4,139.6L826.9,139.3L827.8,139.1L829.9,139.8L832.5,141.1L834.5,142.1L835.5,144.6L836.4,147.4L837.4,150.3L838.2,152.3L839.1,155.1L839.9,157.4L840.9,160.3L841.5,161.9L841.9,162.3L842.0,162.9L842.0,163.3L842.1,163.5L842.3,163.8L842.4,164.3L842.4,164.7L842.4,165.2L842.6,165.9L843.0,166.3L843.4,166.5L843.8,166.4L844.2,166.5L844.9,166.8L845.8,167.0L846.6,166.8L847.1,166.6L847.9,166.6L848.4,167.2L848.5,167.8L848.2,168.3L847.8,168.6L847.9,169.1L848.3,169.5L848.8,169.9L849.3,170.5L849.4,171.2L849.3,171.9L849.4,172.5L849.8,172.9L850.7,173.4L851.3,173.9L852.0,174.0L852.3,173.6L852.4,173.2L852.6,172.9L853.1,172.9L853.7,172.9L854.3,172.9"/>
 <g id="markers"></g>
 </svg>
+<div class="legend" id="legend"></div>
 <a class="peek" id="peek" hidden><img alt=""><span><b></b><small></small></span></a>
 </div>
 <div class="wrap">
@@ -108,7 +113,6 @@ small{display:block;color:var(--muted);font-size:12.5px}
   <div class="filters" role="group" aria-label="Filter by person"><span class="lbl">Show</span><span id="chips"></span></div>
   <div class="score"><span><b id="count">0</b> / 32 arenas</span><span id="scope"></span><div class="ticks" id="ticks"></div></div>
 </header>
-<div class="legend" id="legend"></div>
 <div class="cols" id="lists"></div>
 </div>
 <script>
@@ -163,6 +167,21 @@ function renderChips(){
   }
 }
 
+// Put each logo on its city; where cities crowd together, push logos apart just enough not to overlap.
+const POS=(()=>{
+  const R=16,MIN=2*R+1.5,pts=ARENAS.map(a=>({x:a.cx,y:a.cy,ox:a.cx,oy:a.cy}));
+  for(let it=0;it<400;it++){
+    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+      const a=pts[i],b=pts[j];let dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy);
+      if(d>=MIN)continue;
+      if(d<1e-6){dx=(i%2?1:-1);dy=.3;d=Math.hypot(dx,dy)}
+      const push=(MIN-d)/2/d;a.x-=dx*push;a.y-=dy*push;b.x+=dx*push;b.y+=dy*push;
+    }
+    for(const p of pts){p.x+=(p.ox-p.x)*.03;p.y+=(p.oy-p.y)*.03}
+  }
+  return Object.fromEntries(ARENAS.map((a,i)=>[a.code,pts[i]]));
+})();
+
 function renderMap(){
   const g=document.getElementById("markers");g.textContent="";
   for(const a of ARENAS){
@@ -176,14 +195,12 @@ function renderMap(){
       m.onclick=()=>location.href=game.page;
       m.onkeydown=e=>{if(e.key==="Enter")location.href=game.page};
     }else el("svg:title",{},m,label);
-    if(a.lx!=null)el("svg:line",{x1:a.cx,y1:a.cy,x2:a.lx,y2:a.ly,class:"lead"},m);
-    el("svg:circle",{cx:a.cx,cy:a.cy,r:2.6,class:"dot"},m);
-    const bx=a.px+17,by=a.py+9;
-    el("svg:circle",{cx:bx,cy:by,r:13,class:"badge"},m);
-    el("svg:image",{href:logo(a),x:bx-10,y:by-10,width:20,height:20,class:"logo"},m);
+    const {x:bx,y:by}=POS[a.code];
+    el("svg:circle",{cx:bx,cy:by,r:16,class:"badge"},m);
+    el("svg:image",{href:logo(a),x:bx-13,y:by-13,width:26,height:26,class:"logo"},m);
     if(who.length&&selected.size>1){
-      const w=el("svg:g",{class:"who"},m),step=6.5,x0=a.px+17-(who.length-1)*step/2;
-      who.forEach((p,i)=>el("svg:circle",{cx:x0+i*step,cy:a.py+24,r:2.9,style:`fill:${color(p)}`},w));
+      const w=el("svg:g",{class:"who"},m),step=6.5,x0=bx-(who.length-1)*step/2;
+      who.forEach((p,i)=>el("svg:circle",{cx:x0+i*step,cy:by+19,r:2.9,style:`fill:${color(p)}`},w));
     }
   }
 }
@@ -203,12 +220,15 @@ function hidePeek(){document.getElementById("peek").hidden=true}
 function li(a,ul){
   const {who,state}=status(a);
   const row=el("li",{class:state},ul);
-  const c=el("span",{class:"c"},row);el("img",{src:logo(a),alt:"",loading:"lazy"},c);c.append(a.code);
+  const c=el("span",{class:"c"},row);el("img",{src:logo(a),alt:"",loading:"lazy"},c);
   const game=GAMES[a.code];
   const t=el("span",{class:"t"},row);
   if(game)el("a",{href:game.page,class:"gl"},t,a.team);else t.append(a.team);
-  el("small",{},t,`${a.venue} · ${a.city}`+(game?` · ${game.title}, ${game.date}`:""));
-  if(who.length&&selected.size>1){const d=el("span",{class:"ppl"},row);who.forEach(p=>el("b",{style:`--c:${color(p)}`,title:p.name},d,p.name[0]))}
+  el("small",{},t,`${a.venue} · ${a.city}`);
+  if(game)el("small",{class:"gm"},t,`${game.title} · ${game.date}`);
+  const been=PEOPLE.filter(p=>has(p,a.code));
+  const d=el("span",{class:"ppl",role:"img","aria-label":been.length?"Visited by "+joinNames(been):"Nobody has visited yet"},t);
+  for(const p of PEOPLE)el("i",{class:has(p,a.code)?"on":"",style:`--c:${color(p)}`,title:p.name+(has(p,a.code)?" has been":" hasn't been")},d,p.name[0]);
 }
 function renderLists(){
   const box=document.getElementById("lists");box.textContent="";

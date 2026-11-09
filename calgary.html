@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Red Wings at Flames · Oct 24, 2026 · NHL Arena Quest</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500&display=swap">
+<style>
+:root{
+  --ice:#eef3f7; --land:#ffffff; --line:#9fb3c3; --ink:#14212c; --muted:#5d7080;
+  --goal:#c8102e; --blue:#1f4e8c;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif; --body:"Barlow",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root{
+  --ice:#0d1620; --land:#1a2633; --line:#3c5164; --ink:#e7eef4; --muted:#93a6b6;
+  --goal:#ff4d5e; --blue:#7fb0ef; color-scheme:dark}}
+body{margin:0;background:var(--ice);color:var(--ink);font:15px/1.45 var(--body)}
+.hero{position:relative;height:min(78vh,720px);background:#000 url(public/calgary/IMG_0248.jpg) center 62%/cover no-repeat}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgb(0 0 0 / .4),transparent 22%)}
+.back{position:absolute;z-index:1;top:16px;left:max(16px,env(safe-area-inset-left,0px));font:600 15px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;color:#fff;text-decoration:none;background:rgb(0 0 0 / .35);padding:9px 14px;border-radius:999px;backdrop-filter:blur(6px)}
+.back:hover{background:rgb(0 0 0 / .55)}
+.hero-text{background:#14212c;color:#fff;padding:22px max(16px,env(safe-area-inset-left,0px)) 24px}
+.hero-text>div{max-width:1100px;margin:0 auto}
+.kicker{font:600 15px/1 var(--display);letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+h1{font:700 clamp(34px,6vw,64px)/1 var(--display);text-transform:uppercase;letter-spacing:.02em;margin:8px 0 0;text-wrap:balance}
+.wrap{max-width:1100px;margin:0 auto;padding:28px max(16px,env(safe-area-inset-left,0px)) 48px;display:grid;gap:36px}
+h2{font:700 16px/1 var(--display);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 12px}
+.card{background:var(--land);border:1px solid color-mix(in srgb,var(--line) 50%,transparent);border-radius:12px;padding:20px}
+
+/* Final score */
+.final{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px}
+.team{display:flex;align-items:center;gap:14px}
+.team.home{flex-direction:row-reverse;text-align:right}
+.team img{width:64px;height:64px}
+.team .nm{font:700 22px/1.05 var(--display);text-transform:uppercase}
+.team small{display:block;color:var(--muted);font-size:13px}
+.team .sc{font:700 56px/1 var(--display);font-variant-numeric:tabular-nums;margin:0 6px}
+.team.lost .sc{color:var(--muted)}
+.mid{text-align:center;font:600 14px/1.3 var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mid b{display:block;color:var(--goal);font-size:18px}
+
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th,td{padding:8px 6px;text-align:center;border-bottom:1px solid color-mix(in srgb,var(--line) 40%,transparent)}
+th{font:600 13px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+td:first-child,th:first-child{text-align:left}
+tr:last-child td{border-bottom:0}
+.tm{display:flex;align-items:center;gap:8px;font:700 16px/1 var(--display)}
+.tm img{width:26px;height:26px}
+td.tot{font-weight:700}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start}
+.goals{list-style:none;margin:0;padding:0}
+.goals .per{font:600 13px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:14px 0 6px}
+.goals .per:first-child{padding-top:0}
+.goal{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid color-mix(in srgb,var(--line) 40%,transparent)}
+.goal img{width:26px;height:26px}
+.goal b{font-weight:500}
+.goal small{display:block;color:var(--muted);font-size:12.5px}
+.goal .t{font:600 14px/1.2 var(--display);text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.goal .t span{display:block;color:var(--ink);font-size:16px}
+.pp{font:700 11px/1 var(--display);background:var(--goal);color:#fff;border-radius:4px;padding:2px 4px;margin-left:6px;vertical-align:1px}
+.stats td:first-child,.stats th:first-child{text-align:center}
+.stats td:nth-child(2),.stats th:nth-child(2){color:var(--muted);font:600 13px/1 var(--display);letter-spacing:.06em;text-transform:uppercase}
+.stars{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center}
+.stars div{font:700 17px/1.1 var(--display);text-transform:uppercase}
+.stars i{display:block;font-style:normal;color:var(--goal);font-size:20px;letter-spacing:2px}
+.stars small{display:block;font:400 12.5px var(--body);text-transform:none;color:var(--muted)}
+
+/* Photos */
+.photos h3{font:700 22px/1 var(--display);text-transform:uppercase;letter-spacing:.03em;margin:28px 0 12px}
+.photos h3:first-of-type{margin-top:0}
+.gal{columns:3 260px;column-gap:10px}
+.gal button{display:block;width:100%;padding:0;margin:0 0 10px;border:0;background:none;cursor:zoom-in;break-inside:avoid;border-radius:8px;overflow:hidden}
+.gal img{display:block;width:100%;height:auto;transition:transform .25s}
+.gal button:hover img{transform:scale(1.03)}
+.gal button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+dialog{border:0;padding:0;background:transparent;max-width:96vw;max-height:94vh}
+dialog::backdrop{background:rgb(0 0 0 / .88)}
+dialog img{display:block;max-width:96vw;max-height:94vh;object-fit:contain}
+dialog button{position:fixed;top:12px;font:700 28px/1 var(--display);color:#fff;background:rgb(0 0 0 / .4);border:0;border-radius:999px;width:44px;height:44px;cursor:pointer}
+#close{right:12px} #prev{left:12px;top:50%} #next{right:12px;top:50%}
+footer{color:var(--muted);font-size:12.5px}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<div class="hero">
+  <a class="back" href="index.html">← All arenas</a>
+</div>
+<div class="hero-text"><div>
+  <div class="kicker">Scotiabank Saddledome · Calgary, AB · Sat, Oct 24, 2026</div>
+  <h1>Red Wings at Flames</h1>
+</div></div>
+
+<div class="wrap">
+  <section>
+    <h2>Final</h2>
+    <div class="card final">
+      <div class="team away lost"><img src="https://assets.nhle.com/logos/nhl/svg/DET_light.svg" alt=""><div><span class="nm">Detroit Red Wings</span><small>Away</small></div><span class="sc">1</span></div>
+      <div class="mid"><b>Final</b>8:00 PM MT</div>
+      <div class="team home"><img src="https://assets.nhle.com/logos/nhl/svg/CGY_light.svg" alt=""><div><span class="nm">Calgary Flames</span><small>Home</small></div><span class="sc">4</span></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <table>
+      <thead><tr><th>Team</th><th>1st</th><th>2nd</th><th>3rd</th><th>T</th><th>SOG</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tm"><img src="https://assets.nhle.com/logos/nhl/svg/DET_light.svg" alt="">DET</span></td><td>0</td><td>1</td><td>0</td><td class="tot">1</td><td>30</td></tr>
+        <tr><td><span class="tm"><img src="https://assets.nhle.com/logos/nhl/svg/CGY_light.svg" alt="">CGY</span></td><td>1</td><td>3</td><td>0</td><td class="tot">4</td><td>25</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="grid2">
+    <section>
+      <h2>Scoring</h2>
+      <div class="card">
+        <ul class="goals">
+          <li class="per">1st period</li>
+          <li class="goal"><img src="https://assets.nhle.com/logos/nhl/svg/CGY_light.svg" alt="CGY"><span><b>J. Farabee</b><small>A. Klapka, K. Bahl</small></span><span class="t">17:50<span>0–1</span></span></li>
+          <li class="per">2nd period</li>
+          <li class="goal"><img src="https://assets.nhle.com/logos/nhl/svg/DET_light.svg" alt="DET"><span><b>A. Copp</b><small>J. Compher</small></span><span class="t">2:22<span>1–1</span></span></li>
+          <li class="goal"><img src="https://assets.nhle.com/logos/nhl/svg/CGY_light.svg" alt="CGY"><span><b>Z. Parekh</b><abbr class="pp" title="Power play">PP</abbr><small>M. Coronato, J. Farabee</small></span><span class="t">8:38<span>1–2</span></span></li>
+          <li class="goal"><img src="https://assets.nhle.com/logos/nhl/svg/CGY_light.svg" alt="CGY"><span><b>R. Strome</b><small>M. Frost, M. Gridin</small></span><span class="t">17:04<span>1–3</span></span></li>
+          <li class="goal"><img src="https://assets.nhle.com/logos/nhl/svg/CGY_light.svg" alt="CGY"><span><b>M. Gridin</b><abbr class="pp" title="Power play">PP</abbr><small>J. Farabee, M. Coronato</small></span><span class="t">18:30<span>1–4</span></span></li>
+          <li class="per">3rd period</li>
+          <li class="goal" style="grid-template-columns:1fr"><small style="color:var(--muted)">No scoring</small></li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Team stats</h2>
+      <div class="card">
+        <table class="stats">
+          <thead><tr><th>DET</th><th></th><th>CGY</th></tr></thead>
+          <tbody>
+            <tr><td>30</td><td>Shots</td><td>25</td></tr>
+            <tr><td>0/2</td><td>Power play</td><td>2/2</td></tr>
+            <tr><td>55%</td><td>Faceoffs</td><td>45%</td></tr>
+            <tr><td>11</td><td>PIM</td><td>11</td></tr>
+            <tr><td>18</td><td>Hits</td><td>20</td></tr>
+            <tr><td>6</td><td>Blocked</td><td>15</td></tr>
+            <tr><td>21</td><td>Giveaways</td><td>9</td></tr>
+            <tr><td>3</td><td>Takeaways</td><td>6</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 style="margin-top:20px">Goalies</h2>
+      <div class="card">
+        <table>
+          <thead><tr><th>Goalie</th><th>Saves</th><th>SV%</th><th>Dec</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tm"><img src="https://assets.nhle.com/logos/nhl/svg/DET_light.svg" alt="DET">J. Gibson</span></td><td>21/25</td><td>.840</td><td>L</td></tr>
+            <tr><td><span class="tm"><img src="https://assets.nhle.com/logos/nhl/svg/CGY_light.svg" alt="CGY">D. Cooley</span></td><td>29/30</td><td>.967</td><td>W</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <section>
+    <h2>Three stars</h2>
+    <div class="card stars">
+      <div><i>★</i>J. Farabee<small>1 G, 2 A · CGY</small></div>
+      <div><i>★★</i>D. Cooley<small>29 saves · CGY</small></div>
+      <div><i>★★★</i>M. Gridin<small>1 G, 1 A · CGY</small></div>
+    </div>
+  </section>
+
+  <section class="photos">
+    <h2>Photos</h2>
+    <h3>Around Calgary</h3>
+    <div class="gal" data-set="IMG_5512 IMG_5518 IMG_5513 IMG_5514 IMG_5515 IMG_5516 IMG_5517 IMG_5519 IMG_5520 IMG_5521 IMG_5522 IMG_5523 IMG_5524 IMG_5525 IMG_5526 IMG_5527 IMG_5528 IMG_5529 IMG_5530"></div>
+    <h3>At the Saddledome</h3>
+    <div class="gal" data-set="IMG_0246 IMG_0247 IMG_0248 IMG_0249 IMG_5532 IMG_5533 IMG_5534 IMG_0251 IMG_0252"></div>
+    <h3>The next day</h3>
+    <div class="gal" data-set="IMG_5535 IMG_5536 IMG_5537 IMG_5538 IMG_5539 IMG_5540"></div>
+  </section>
+
+  <footer>Box score from the <a href="https://www.nhl.com/gamecenter/det-vs-cgy/2026/10/24/2026020178">NHL Gamecenter</a>.</footer>
+</div>
+
+<dialog id="lb" aria-label="Photo">
+  <img alt="">
+  <button id="close" aria-label="Close">×</button>
+  <button id="prev" aria-label="Previous photo">‹</button>
+  <button id="next" aria-label="Next photo">›</button>
+</dialog>
+
+<script>
+const all=[];
+document.querySelectorAll(".gal").forEach(g=>{
+  for(const n of g.dataset.set.split(" ")){
+    const i=all.length,src=`public/calgary/${n}.jpg`;all.push(src);
+    const b=document.createElement("button");b.type="button";b.setAttribute("aria-label",`Open photo ${i+1}`);
+    const img=document.createElement("img");img.src=src;img.alt="";img.loading="lazy";
+    b.append(img);b.onclick=()=>open(i);g.append(b);
+  }
+});
+const lb=document.getElementById("lb"),big=lb.querySelector("img");let cur=0;
+function open(i){cur=(i+all.length)%all.length;big.src=all[cur];if(!lb.open)lb.showModal()}
+document.getElementById("close").onclick=()=>lb.close();
+document.getElementById("prev").onclick=()=>open(cur-1);
+document.getElementById("next").onclick=()=>open(cur+1);
+lb.onclick=e=>{if(e.target===lb)lb.close()};
+lb.addEventListener("keydown",e=>{if(e.key==="ArrowLeft")open(cur-1);if(e.key==="ArrowRight")open(cur+1)});
+</script>
+</body>
+</html>
